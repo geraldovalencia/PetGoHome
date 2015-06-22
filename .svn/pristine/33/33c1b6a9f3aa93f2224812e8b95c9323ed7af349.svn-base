@@ -1,0 +1,24 @@
+package br.com.petGoHome.DAO;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import br.com.petGoHome.entidades.Tag;
+
+public class TagDao extends AbstractDao<Tag> {
+
+	public TagDao(EntityManager manager) {
+		super(manager);
+	}
+
+	@Override
+	public Class<Tag> entityClass() {
+		return Tag.class;
+	}
+
+
+	
+
+}

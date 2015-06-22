@@ -1,0 +1,239 @@
+<%@ include file="../../includeAdm/topo.jsp"%>
+<%@ include file="../../includeAdm/menuADM.jsp"%>
+<style>
+#ListaPET li {
+	list-style: none;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	font-size: 15px;
+}
+</style>
+
+<%@ include file="../../includeAdm/menuLateral.jsp"%>
+<%@ include file="../../includeAdm/mensagens.jsp"%>
+
+
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<h1>
+		Listagens dos PETSHOP's <small><span class="txt-azul">${qtLista}
+				cadastrados</span></small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+		<li class="active">Listagem de PETSHOP</li>
+	</ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+	<!-- Small boxes (Stat box) -->
+	<div class="row">
+		<!-- small box -->
+
+		<%-- 			<%@ include file="../../includeAdm/BoxesInfo.jsp"%>    --%>
+
+	</div>
+	<!-- /.row -->
+	<!-- ------------------------------------------- TABS de info ----------------------------------------------- -->
+
+
+	<!-- ------------------------------------------- PETS de info ----------------------------------------------- -->
+
+	<div class="row" id="ListaPET">
+
+
+		<div class="col-md-offset-1 col-lg-offset-1 col-md-10 col-lg-10">
+
+
+			<table id="table-pagination" data-url="listadeTags.json"
+				data-height="400" data-pagination="true" data-search="true">
+				<thead>
+					<tr>
+
+						<th data-field="state" data-checkbox="true"></th>
+						<th data-field="id" data-align="right" data-sortable="true">ID</th>
+						<th data-field="tag" data-align="center" data-sortable="true">Código
+							da TAG</th>
+						<th data-field="datac" data-sortable="true"
+							data-sorter="priceSorter">DATA/CRIAÇÃO</th>
+						<th data-field="datav" data-sortable="true" data-sortable="true">DATA/ATIVAÇÃO</th>
+						<th data-field="usuario" data-sortable="true" data-sortable="true">USUÁRIO</th>
+						<th data-field="idPet" data-sortable="true" data-sortable="true">ID-PET</th>
+					</tr>
+				</thead>
+			</table>
+
+<p>Tabela de teste acima</p>
+
+
+			<div class="box">
+				<div class="box-header with-border">
+					<h3 class="box-title">Tags registradas no sistema</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<table class="table table-bordered">
+
+
+						<c:if test="${qtLista != 0}">
+
+							<tbody>
+								<tr>
+									<th style="width: 10px">ID</th>
+									<th>Código da TAG</th>
+									<th><strong>DATA/CRIAÇÃO</strong></th>
+									<th><strong>DATA/ATIVAÇÃO</strong></th>
+									<th><strong>USUÁRIO</strong></th>
+									<th style="width: 100px">ID-PET</th>
+								</tr>
+								<c:forEach var="tag" items="${tags}">
+									<tr>
+										<td>${tag.id}</td>
+										<c:if test="${tag.pet.id != null}">
+											<td class="laranja"><strong>${tag.valorTag}</strong></td>
+										</c:if>
+										<c:if test="${tag.pet.id == null}">
+											<td class="txt-verde"><strong>${tag.valorTag}</strong></td>
+										</c:if>
+										<td><fmt:formatDate value="${tag.dataCriacao}"
+												type="both" pattern="dd/MM/yyyy" /></td>
+										<td><fmt:formatDate value="${tag.dataAtivacao}"
+												type="both" pattern="dd/MM/yyyy" /></td>
+
+										<td>${tag.pet.pessoa.nome}</td>
+
+
+										<c:if test="${tag.pet.id != null}">
+											<td><span class="badge bg-red">${tag.pet.id}</span></td>
+										</c:if>
+										<c:if test="${tag.pet.id == null}">
+											<td><span class="badge bg-green">(livre)</span></td>
+										</c:if>
+									</tr>
+
+								</c:forEach>
+							</tbody>
+
+						</c:if>
+						<c:if test="${qtLista == 0}">
+
+							<tbody>
+								<tr>
+									<td colspan="1"></td>
+									<td colspan="1"></td>
+									<td colspan="1"></td>
+									<td colspan="4"><h5>Nenhum resultado encontrado.</h5></td>
+								</tr>
+							</tbody>
+						</c:if>
+					</table>
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer clearfix">
+					<ul class="pagination pagination-sm no-margin pull-right">
+						<li><a href="#">«</a></li>
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">»</a></li>
+					</ul>
+				</div>
+			</div>
+
+
+
+
+
+			<!-- 			<div class="col-md-offset-1 col-lg-offset-1 col-md-10 col-lg-10"> -->
+
+			<!-- 				<table class="table table-striped"> -->
+			<!-- 					<thead> -->
+			<!-- 						<tr> -->
+			<!-- 							<th><strong>#IDº</strong></th> -->
+			<!-- 							<th><strong>VALOR</strong></th> -->
+			<!-- 							<th><strong>PET</strong></th> -->
+			<!-- 							<th><strong>DATA/CRIAÇÃO</strong></th> -->
+			<!-- 							<th><strong>DATA/ATIVAÇÃO</strong></th> -->
+			<!-- 						</tr> -->
+			<!-- 					</thead> -->
+
+			<%-- 					<c:if test="${qtLista != 0}"> --%>
+
+			<!-- 						<tbody> -->
+			<%-- 							<c:forEach var="tag" items="${tags}"> --%>
+			<!-- 								<tr> -->
+			<%-- 									<td c>${tag.id}</td> --%>
+			<%-- 									<td><strong>${tag.valorTag}</strong></td> --%>
+			<%-- 									<td>${tag.pet.id}</td> --%>
+
+			<%-- 									<td><fmt:formatDate value="${tag.dataCriacao}" type="both" --%>
+			<%-- 											pattern="dd/MM/yyyy" /></td> --%>
+			<%-- 									<td><fmt:formatDate value="${tag.dataAtivacao}" --%>
+			<%-- 											type="both" pattern="dd/MM/yyyy" /></td> --%>
+			<!-- 								</tr> -->
+			<%-- 							</c:forEach> --%>
+			<!-- 						</tbody> -->
+			<%-- 					</c:if> --%>
+			<%-- 					<c:if test="${qtLista == 0}"> --%>
+
+			<!-- 						<tbody> -->
+			<!-- 							<tr> -->
+			<!-- 								<td colspan="1"></td> -->
+			<!-- 								<td colspan="1"></td> -->
+			<!-- 								<td colspan="1"></td> -->
+			<!-- 								<td colspan="4"><h5>Nenhum resultado encontrado.</h5></td> -->
+			<!-- 							</tr> -->
+			<!-- 						</tbody> -->
+			<%-- 					</c:if> --%>
+
+			<!-- 				</table> -->
+
+			<c:if test="${not empty qtdePages}">
+				<div id="pagination" align="center">
+					<ul class="pagination">
+						<c:if test="${not empty param.pag}">
+							<li><a href="Listar-Tags.adm?pag=0">Início</a></li>
+						</c:if>
+
+
+						<%-- 							<c:forEach var="teste" begin="0" end="${qtdePages}" step="1"> --%>
+						<%-- 								<li><a href="Listar-Tags.adm?pag=${teste*8}">${teste+1}</a></li> --%>
+						<%-- 							</c:forEach> --%>
+
+						<c:forEach var="teste" begin="0" end="${qtdePages}" step="1">
+							<li><a href="Listar-Tags.adm?pag=${teste*8}">${teste+1}</a></li>
+						</c:forEach>
+
+						<c:if test="${param.pag lt qtdePages}">
+							<c:if test="${not empty param.pag}">
+								<li><a
+									href="Listar-Tags.adm?pag=${param.pag == null ? qtdePages-2 : param.pag + 8}">Próximo</a></li>
+							</c:if>
+						</c:if>
+					</ul>
+				</div>
+			</c:if>
+
+
+		</div>
+
+	</div>
+	<!-- /.row (main row) -->
+	</div>
+</section>
+<!-- /.content -->
+
+
+
+
+
+
+
+</div>
+<!-- /.content-wrapper -->
+<%@ include file="../../includeAdm/rodapeAdm.jsp"%>
+<%@ include file="../../../includes/MascarasJS.jsp"%>

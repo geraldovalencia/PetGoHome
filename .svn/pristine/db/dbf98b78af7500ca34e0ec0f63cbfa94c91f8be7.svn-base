@@ -1,0 +1,273 @@
+package br.com.petGoHome.Servlets;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import br.com.petGoHome.Fachada.Fachada;
+import br.com.petGoHome.entidades.Cachorro;
+import br.com.petGoHome.entidades.Gato;
+import br.com.petGoHome.entidades.Pessoa;
+import br.com.petGoHome.entidades.Tag;
+
+/**
+ * Servlet implementation class VincularTagPet
+ */
+public class VincularTagPet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public VincularTagPet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// Recebe o clique que será feito na página de Pets cadastrados
+
+		String idDog = request.getParameter("idDog");
+		String idGato = request.getParameter("idGato");
+		String idPessoa = request.getParameter("idPessoa");
+
+		String messageErro = "<div id='msgAlerta' style='width:30%'  align='center' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button><span><img src='img/exclamacao.png' /></span><h5>Erro! Faça o login para realizar essa transação.</h5></div>";
+
+		Pessoa pf = new Pessoa();
+		pf = (Pessoa) request.getSession().getAttribute("pessoaLogado");
+
+		if (pf == null) {
+			request.getSession().setAttribute("messageErro", messageErro);
+			response.sendRedirect("Index.pet");
+		} else if (pf != null) {
+
+			if (idDog != null && idGato == null) {// Entra aqui se for Cachorro
+				// Verifica se a pessoa é a dona do cachorro na sessao.
+				if (idDog != null && pf.getId() == Long.parseLong(idPessoa)) {
+
+					Pessoa pessoa = new Pessoa();
+					Cachorro dog = new Cachorro();
+					try {
+
+						pessoa = Fachada.buscarPessoaPorId(Long
+								.parseLong(idPessoa));
+						dog = Fachada
+								.buscarCachorroPorId(Long.parseLong(idDog));
+
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						messageErro = "<div id='msgAlerta' style='width:30%'  align='center' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button><span><img src='img/exclamacao.png' /></span><h5>Erro sem conexão com o Banco de Dados.</h5></div>";
+						request.getSession().setAttribute("messageErro",
+								messageErro);
+						response.sendRedirect("Index.pet");
+					}
+
+					request.setAttribute("pessoa", pessoa);
+					request.setAttribute("dog", dog);
+
+					request.getRequestDispatcher("paginas/Tag/vincular-tag.jsp")
+							.forward(request, response);
+				}
+			}
+			if (idGato != null && idDog == null) {// Entra aqui se for Gato
+				// Verifica se a pessoa é a dona do cachorro na sessao.
+				if (idGato != null && pf.getId() == Long.parseLong(idPessoa)) {
+
+					
+					Pessoa pessoa = new Pessoa();
+					Gato gato = new Gato();
+					try {
+
+						pessoa = Fachada.buscarPessoaPorId(Long
+								.parseLong(idPessoa));
+						gato = Fachada
+								.buscarGatoPorId(Long.parseLong(idGato));
+
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						messageErro = "<div id='msgAlerta' style='width:30%'  align='center' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button><span><img src='img/exclamacao.png' /></span><h5>Erro sem conexão com o Banco de Dados.</h5></div>";
+						request.getSession().setAttribute("messageErro",
+								messageErro);
+						response.sendRedirect("Index.pet");
+					}
+
+					request.setAttribute("pessoa", pessoa);
+					request.setAttribute("gato", gato);
+
+					request.getRequestDispatcher("paginas/Tag/vincular-tag.jsp")
+							.forward(request, response);
+					
+				}
+			}
+
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		// Envia para cá depois de vincular
+
+		String idDogVinculado = request.getParameter("idDogVinculado");
+		String idGatoVinculado = request.getParameter("idGatoVinculado");
+		String idPessoa = request.getParameter("idPessoa");
+		String valorTag = request.getParameter("valorTag");
+		
+		String message = "<div id='msgAlerta' style='width:30%'  align='center' class='alert alert-success'><button type='button' class='close' data-dismiss='alert'>x</button><h5>Vínculo realizado com sucesso...</h5></div>";
+
+		String messageErro = "<div id='msgAlerta' style='width:30%'  align='center' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button><span><img src='img/exclamacao.png' /></span><h5>Erro! Problemas na vinculação.</h5></div>";
+
+		Pessoa pf = new Pessoa();
+		pf = (Pessoa) request.getSession().getAttribute("pessoaLogado");
+
+		if (pf == null) {
+			request.getSession().setAttribute("messageErro", messageErro);
+			response.sendRedirect("Index.pet");
+		} else if (pf != null) {
+
+			if (idDogVinculado != null && idGatoVinculado == null) {// Entra aqui se for
+															// Cachorro
+				// Verifica se a pessoa é a dona do cachorro na sessao.
+				if (idDogVinculado != null
+						&& pf.getId() == Long.parseLong(idPessoa)) {
+
+					Cachorro dog = new Cachorro();
+					Pessoa pessoa = new Pessoa();
+					try {
+
+						dog = Fachada.buscarCachorroPorId(Long
+								.parseLong(idDogVinculado));
+						pessoa = Fachada.buscarPessoaPorId(Long
+								.parseLong(idPessoa));
+
+						List<Tag> tags = new ArrayList<Tag>();
+
+						tags = Fachada.buscarTagPorNome(valorTag);
+
+						if(tags.size() != 0){
+							for (Tag tag : tags) {
+								if (tag.getValorTag().equals(valorTag)) {
+									tag.setDataAtivacao(new Date(System
+											.currentTimeMillis()));
+									tag.setPet(dog);
+									tag.setIdPet(Long.parseLong(idDogVinculado));
+									dog.setTagNumero(valorTag);
+									try {
+										dog.setPossuiTag(true);
+										Fachada.alterarPet(dog);
+										Fachada.alterarTAG(tag);
+										request.getSession().setAttribute("message", message);
+										response.sendRedirect("Pets-Cadastrados.pets");
+									} catch (Exception e) {
+										System.out.println(e.getMessage());
+										messageErro = "<div id='msgAlerta' style='width:30%'  align='center' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button><span><img src='img/exclamacao.png' /></span><h5>Erro em salvação do vínculo da Tag. Já existe um Pet vinculado a essa Tag.</h5></div>";
+										request.getSession().setAttribute(
+												"messageErro", messageErro);
+										response.sendRedirect("Index.pet");
+									}
+									
+								}
+							}
+						}else{
+							messageErro = "<div id='msgAlerta' style='width:30%'  align='center' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button><span><img src='img/exclamacao.png' /></span><h5>Erro, Tag inexistente.</h5></div>";
+							request.getSession().setAttribute(
+									"messageErro", messageErro);
+							response.sendRedirect("Index.pet");
+						}
+						
+						
+						
+						
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						messageErro = "<div id='msgAlerta' style='width:30%'  align='center' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button><span><img src='img/exclamacao.png' /></span><h5>Erro sem conexão com o Banco de Dados.</h5></div>";
+						request.getSession().setAttribute("messageErro",
+								messageErro);
+						response.sendRedirect("Index.pet");
+					}
+
+				}
+
+			}
+		}
+		if (idGatoVinculado != null && idDogVinculado == null) {// Entra aqui se for Gato
+			// Verifica se a pessoa é a dona do cachorro na sessao.
+			if (idGatoVinculado != null && pf.getId() == Long.parseLong(idPessoa)) {
+				
+				Gato gato = new Gato();
+				Pessoa pessoa = new Pessoa();
+				try {
+
+					gato = Fachada.buscarGatoPorId(Long
+							.parseLong(idGatoVinculado));
+					pessoa = Fachada.buscarPessoaPorId(Long
+							.parseLong(idPessoa));
+
+					List<Tag> tags = new ArrayList<Tag>();
+
+					tags = Fachada.buscarTagPorNome(valorTag);
+
+					if(tags.size() != 0){
+						for (Tag tag : tags) {
+							if (tag.getValorTag().equals(valorTag)) {
+								tag.setDataAtivacao(new Date(System
+										.currentTimeMillis()));
+								tag.setPet(gato);
+								tag.setIdPet(Long.parseLong(idGatoVinculado));
+								gato.setTagNumero(valorTag);
+								try {
+									gato.setPossuiTag(true);
+									Fachada.alterarPet(gato);
+									Fachada.alterarTAG(tag);
+									request.getSession().setAttribute("message", message);
+									response.sendRedirect("Pets-Cadastrados.pets");
+								} catch (Exception e) {
+									System.out.println(e.getMessage());
+									messageErro = "<div id='msgAlerta' style='width:30%'  align='center' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button><span><img src='img/exclamacao.png' /></span><h5>Erro em salvação do vínculo da Tag. Já existe um Pet vinculado a essa Tag.</h5></div>";
+									request.getSession().setAttribute(
+											"messageErro", messageErro);
+									response.sendRedirect("Index.pet");
+								}
+								
+							}
+						}
+					}else{
+						messageErro = "<div id='msgAlerta' style='width:30%'  align='center' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button><span><img src='img/exclamacao.png' /></span><h5>Erro, Tag inexistente.</h5></div>";
+						request.getSession().setAttribute(
+								"messageErro", messageErro);
+						response.sendRedirect("Index.pet");
+					}
+					
+					
+					
+					
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+					messageErro = "<div id='msgAlerta' style='width:30%'  align='center' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button><span><img src='img/exclamacao.png' /></span><h5>Erro sem conexão com o Banco de Dados.</h5></div>";
+					request.getSession().setAttribute("messageErro",
+							messageErro);
+					response.sendRedirect("Index.pet");
+				}
+
+			}
+
+		}
+
+	}
+
+}

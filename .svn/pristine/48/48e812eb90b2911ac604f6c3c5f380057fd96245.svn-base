@@ -1,0 +1,196 @@
+package br.com.petGoHome.Servlets;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import br.com.petGoHome.Fachada.Fachada;
+import br.com.petGoHome.banner.Banner;
+import br.com.petGoHome.entidades.Administrador;
+import br.com.petGoHome.entidades.Pessoa;
+import br.com.petGoHome.entidades.PessoaFisica;
+import br.com.petGoHome.entidades.Pet;
+import br.com.petGoHome.entidades.Tag;
+import br.com.petGoHome.entidades.TipoUsuario;
+
+public class Login extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    public Login() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String message = null; 
+		String messageErro = "<div id='msgAlerta' style='width:50%'  align='center' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>x</button><img src='img/exclamacao.png' /><h5>Erro! Usuário ou senha não confere. Tente outra vez.</h5></div>";
+		
+		
+		System.out.println("Fazendo o login... Sevlet Login");
+		String login = request.getParameter("login");
+		String senha = request.getParameter("senha");
+		
+		
+		
+		System.out.println("Tentativa de login: " + login);
+		System.out.println("Tentativa de login: " + senha);
+		
+		if (login == null || login.equals("")||senha==null||senha.equals("") ){
+			
+			response.sendRedirect("Index.Pet");
+			return;// Pra sair da tela 
+		}else{
+			
+		}
+		try{
+			Pessoa pessoaLogado = Fachada.logarPessoa(login,senha);
+			System.out.println("-----------------------------------------------");
+			System.out.println("Pessoa Logada: " + pessoaLogado.getNome().toString());
+//			if (pessoaLogado == null) {
+//				System.out.println("Recuperou a Pessoa nulo e redirecionou para index");
+//				response.sendRedirect("Index.pet");
+//				return;
+//		}
+			if (pessoaLogado != null){
+			
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");  
+			String dataAtual = sdf.format( new Date( System.currentTimeMillis() ) );
+			
+			System.out.println("Data: " + dataAtual);
+			request.getSession().setAttribute("dataAtual", dataAtual);
+			String usuarioOnline = pessoaLogado.getNome();
+			String dataUserInicio = sdf.format((pessoaLogado.getDataCriacao() ));
+			int numeroDeTAG = 0;
+			List <Pet> pets = Fachada.listarTodosPetsPorDono(pessoaLogado);
+			
+			for (Pet pet : pets) {
+				if(pet.isPossuiTag() == true){
+					numeroDeTAG += 1;
+				}
+			}
+			
+			int numeroDePets = pets.size();
+			PessoaFisica pf = null;
+			Administrador adm = null;
+			String menuAdm = "";
+			
+			
+			if(pessoaLogado.getTipoUsuario() == TipoUsuario.USUARIO){
+				
+				System.out.println("PessoaLogado é do tipo Usuario");
+				try {
+					if(pessoaLogado instanceof PessoaFisica){
+						System.out.println("Entrou no Instanceof PF");
+						pf = (PessoaFisica) pessoaLogado;
+						System.out.println(pf.getNome());
+						System.out.println(pf.getCpf());
+					}
+					request.getSession().setAttribute("pessoaLogado", pf);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+					System.out.println("Problemas. Tente ver se o usuario cadastrado no BD é do tipo PessoaFisica.");
+				}
+				
+			}else if (pessoaLogado.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
+				
+				try {
+					if(pessoaLogado instanceof Administrador){
+						System.out.println("Entrou no Instanceof ADM");
+						adm = (Administrador) pessoaLogado;
+						System.out.println(adm.getNome());
+						menuAdm = "OK";
+						
+						List<Tag> tags = new ArrayList<Tag>();
+						tags = Fachada.listarTodasTAGS();
+						
+						int tagsTotal = tags.size();
+						int tagsUsadas = 0;
+						int tagsDisponiveis = 0;
+						
+						for (Tag tag : tags) {
+							try {
+								if(tag.getPet() != null || tag.getIdPet() != null){
+									tagsUsadas += 1;
+									System.out.println(" ----------------------------------- ");
+									System.out.println("Tag Usada: "+tag.getValorTag());
+									System.out.println("ID: "+tag.getId());
+									
+								}
+							} catch (Exception e) {
+								tagsUsadas = 0;
+										e.printStackTrace();
+								System.out.println("Não há mais tags usadas.");
+								break;
+							}
+							
+						}
+						
+						tagsDisponiveis = tagsTotal - tagsUsadas;
+						System.out.println("Tagas Disponiveis: "+tagsDisponiveis);
+						System.out.println("Tagas usadas: "+tagsUsadas);
+						request.getSession().setAttribute("tagsDisponiveis", tagsDisponiveis);
+						request.getSession().setAttribute("tagsUsadas", tagsUsadas);
+						request.getSession().setAttribute("tagsTotal", tagsTotal);
+					}
+					boolean alterarBanner = true;
+					request.getSession().setAttribute("pessoaLogado", adm);
+					//esse atributo é para habilitar a edição do Banner
+					
+					request.getSession().setAttribute("alterarBanner", alterarBanner);
+					request.getSession().setAttribute("menuAdm", menuAdm);
+					request.getSession().setAttribute("numeroDePets", numeroDePets);
+					request.getSession().setAttribute("dataUserInicio", dataUserInicio);
+					request.getSession().setAttribute("numeroDeTAG", numeroDeTAG);
+			
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+					System.out.println("ERROOOOO. Tente ver se o usuario cadastrado no BD é do tipo Administrador.");
+				}
+				
+			}
+			
+			System.out.println("LOGOU.");
+			
+			
+			//Envia essa string somente para boas vindas
+			System.out.println("Seta na sessão o usuário Logado");
+			
+			request.getSession().setAttribute("usuarioOnline", usuarioOnline);
+			request.getSession().setAttribute("numeroDePets", numeroDePets);
+			request.getSession().setAttribute("dataUserInicio", dataUserInicio);
+			request.getSession().setAttribute("numeroDeTAG", numeroDeTAG);
+			System.out.println("Usuário Online: " + usuarioOnline);
+			
+			message= "<div id='msgAlerta' style='width:50%' align='center' class='alert alert-success'><button type='button' class='close' data-dismiss='alert'>x</button><h5>Bem vindo: "
+					+ usuarioOnline +
+					"!</h5></div>";
+			//Criando os banners
+			
+			
+			request.getSession().setAttribute("message", message);
+			response.sendRedirect("IndexUser.pet");
+		//	response.sendRedirect("/pags/produtos/listarProdutos.jsp");
+		}
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			System.out.println("Considerou o Usuário Logado Nulo e jogou para Login");
+			request.getSession().setAttribute("messageErro", messageErro);
+			response.sendRedirect("Index.pet");
+	}
+	}
+
+}

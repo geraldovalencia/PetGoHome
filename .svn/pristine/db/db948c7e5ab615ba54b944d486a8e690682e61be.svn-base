@@ -1,0 +1,158 @@
+package br.com.petGoHome.entidades;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+@Entity
+//@SequenceGenerator(name="cachorro_id", sequenceName="cachorro_seq", allocationSize=1) para postgre
+@Inheritance(strategy = InheritanceType.JOINED)
+public class PetShop extends AbstractEntity{
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	//@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="cachorro_id")
+	private long id;
+	
+	@Column(unique = true, length=18, nullable=false)
+	private String cnpj;
+	
+	private String telefone;
+	
+	private String nomePetShop;
+	private String emailPetShop;
+	
+	private boolean recebeuTag;
+	
+	@Temporal(TemporalType.DATE)
+	private Date dataCriacao;
+	@Temporal(TemporalType.DATE)
+	private Date dataUltimaAlteracao;
+	
+	
+	@Embedded//faz de um objeto um componente, um componente por si só 
+	private Endereco endereco;
+	
+	@Enumerated(EnumType.STRING)	
+	private Uf uf;
+	
+	private String responsavel;
+	
+	@OneToMany
+	private List<Tag> tags;
+	//Assim o Hibernate cria uma tabela para salvar o id da TAG + id do Petshop
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public String getNomePetShop() {
+		return nomePetShop;
+	}
+
+	public void setNomePetShop(String nomePetShop) {
+		this.nomePetShop = nomePetShop;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public Uf getUf() {
+		return uf;
+	}
+
+	public void setUf(Uf uf) {
+		this.uf = uf;
+	}
+
+	public String getResponsavel() {
+		return responsavel;
+	}
+
+	public void setResponsavel(String responsavel) {
+		this.responsavel = responsavel;
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public String getEmailPetShop() {
+		return emailPetShop;
+	}
+
+	public void setEmailPetShop(String emailPetShop) {
+		this.emailPetShop = emailPetShop;
+	}
+
+	public Date getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(Date dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public Date getDataUltimaAlteracao() {
+		return dataUltimaAlteracao;
+	}
+
+	public void setDataUltimaAlteracao(Date dataUltimaAlteracao) {
+		this.dataUltimaAlteracao = dataUltimaAlteracao;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public boolean isRecebeuTag() {
+		return recebeuTag;
+	}
+
+	public void setRecebeuTag(boolean recebeuTag) {
+		this.recebeuTag = recebeuTag;
+	}
+	
+	
+	
+
+}

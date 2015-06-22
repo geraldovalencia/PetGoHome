@@ -1,0 +1,6 @@
+<Context docBase="C:/home/images"></Context> 
+
+<!-- Path relatinvo do tomcat para salvar as imagens fora do context.
+No linux usa /home/images
+
+ -->

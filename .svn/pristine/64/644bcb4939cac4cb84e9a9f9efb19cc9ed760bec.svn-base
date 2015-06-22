@@ -1,0 +1,417 @@
+package execucao;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import br.com.petGoHome.Fachada.Fachada;
+import br.com.petGoHome.banner.Banner;
+import br.com.petGoHome.banner.HistoricoBanner;
+import br.com.petGoHome.entidades.Administrador;
+import br.com.petGoHome.entidades.Endereco;
+import br.com.petGoHome.entidades.Pessoa;
+import br.com.petGoHome.entidades.RacaCachorro;
+import br.com.petGoHome.entidades.RacaGato;
+import br.com.petGoHome.entidades.TipoUsuario;
+import br.com.petGoHome.entidades.Uf;
+
+public class ExecMain {
+
+	
+	public static void main(String[] args) {
+		
+		/*
+		
+		 EntityManagerFactory factory = Persistence
+		 .createEntityManagerFactory("petgohome");
+		 EntityManager manager = factory.createEntityManager();
+		
+		 Administrador p = new Administrador();
+		
+		 p.setNome("Geraldo Valencia");
+		 p.setLogin("gval");
+		 p.setSenha("adm");
+		 p.setEmail("geraldovalencia@live.com");
+		 p.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
+		 p.setDataCriacao(new Date( System.currentTimeMillis()));
+		 p.setFuncaoNoSistema("Desenvolvedor");
+		
+		 Fachada.salvarPessoa(p);
+		 
+		//Cadastrando Raca de Cachorros
+		List<String> nomes = new ArrayList<String>();
+
+		RacaCachorro rc0= new RacaCachorro();
+		RacaCachorro rc1= new RacaCachorro();
+		RacaCachorro rc2= new RacaCachorro();
+		RacaCachorro rc3= new RacaCachorro();
+		RacaCachorro rc4= new RacaCachorro();
+		RacaCachorro rc5= new RacaCachorro();
+		RacaCachorro rc6= new RacaCachorro();
+		RacaCachorro rc7= new RacaCachorro();
+		RacaCachorro rc8= new RacaCachorro();
+		RacaCachorro rc9= new RacaCachorro();
+		RacaCachorro rc10= new RacaCachorro();
+		RacaCachorro rc11= new RacaCachorro();
+		RacaCachorro rc12= new RacaCachorro();
+		RacaCachorro rc13= new RacaCachorro();
+		RacaCachorro rc14= new RacaCachorro();
+		RacaCachorro rc15= new RacaCachorro();
+		RacaCachorro rc16= new RacaCachorro();
+		RacaCachorro rc17= new RacaCachorro();
+		RacaCachorro rc18= new RacaCachorro();
+		RacaCachorro rc19= new RacaCachorro();
+		RacaCachorro rc20= new RacaCachorro();
+		RacaCachorro rc21= new RacaCachorro();
+		RacaCachorro rc22= new RacaCachorro();
+		RacaCachorro rc23= new RacaCachorro();
+		RacaCachorro rc24= new RacaCachorro();
+		RacaCachorro rc25= new RacaCachorro();
+		RacaCachorro rc26= new RacaCachorro();
+		RacaCachorro rc27= new RacaCachorro();
+		RacaCachorro rc28= new RacaCachorro();
+		RacaCachorro rc29= new RacaCachorro();
+		RacaCachorro rc30= new RacaCachorro();
+		RacaCachorro rc31= new RacaCachorro();
+		RacaCachorro rc32= new RacaCachorro();
+		RacaCachorro rc33= new RacaCachorro();
+		RacaCachorro rc34= new RacaCachorro();
+		RacaCachorro rc35= new RacaCachorro();
+		RacaCachorro rc36= new RacaCachorro();
+		RacaCachorro rc37= new RacaCachorro();
+		RacaCachorro rc38= new RacaCachorro();
+		RacaCachorro rc39= new RacaCachorro();
+		RacaCachorro rc40= new RacaCachorro();
+		RacaCachorro rc41= new RacaCachorro();
+		RacaCachorro rc42= new RacaCachorro();
+		RacaCachorro rc43= new RacaCachorro();
+		RacaCachorro rc44= new RacaCachorro();
+		RacaCachorro rc45= new RacaCachorro();
+		RacaCachorro rc46= new RacaCachorro();
+		RacaCachorro rc47= new RacaCachorro();
+		RacaCachorro rc48= new RacaCachorro();
+		RacaCachorro rc49= new RacaCachorro();
+		RacaCachorro rc50= new RacaCachorro();
+		RacaCachorro rc51= new RacaCachorro();
+		RacaCachorro rc52= new RacaCachorro();
+		RacaCachorro rc53= new RacaCachorro();
+		RacaCachorro rc54= new RacaCachorro();
+		RacaCachorro rc55= new RacaCachorro();
+		RacaCachorro rc56= new RacaCachorro();
+		RacaCachorro rc57= new RacaCachorro();
+		RacaCachorro rc58= new RacaCachorro();
+		RacaCachorro rc59= new RacaCachorro();
+		RacaCachorro rc60= new RacaCachorro();
+		RacaCachorro rc61= new RacaCachorro();
+		RacaCachorro rc62= new RacaCachorro();
+		RacaCachorro rc63= new RacaCachorro();
+		RacaCachorro rc64= new RacaCachorro();
+		RacaCachorro rc65= new RacaCachorro();
+		RacaCachorro rc66= new RacaCachorro();
+		RacaCachorro rc67= new RacaCachorro();
+		RacaCachorro rc68= new RacaCachorro();
+		
+//		for (int i = 0; i < 69; i++) {
+//			
+//			System.out.println("RacaCachorro rc"+i + "= new RacaCachorro();");
+//		}
+
+		rc0.setNomeRacaCachorro("Akita Inu");
+		rc1.setNomeRacaCachorro("Beagle");
+		rc2.setNomeRacaCachorro("Beagle Harrier");
+		rc3.setNomeRacaCachorro("Bobtail");
+		rc4.setNomeRacaCachorro("Boiadeiro de Berna");
+		rc5.setNomeRacaCachorro("Boxer");
+		rc6.setNomeRacaCachorro("Braco Alemão");
+		rc7.setNomeRacaCachorro("Braco Francês");
+		rc8.setNomeRacaCachorro("Bull Terrier Inglês");
+		rc9.setNomeRacaCachorro("Bulldog Americano");
+		rc10.setNomeRacaCachorro("Bulldog Inglês");
+		rc11.setNomeRacaCachorro("Cairn Terrier");
+		rc12.setNomeRacaCachorro("Cane Corso");
+		rc13.setNomeRacaCachorro("Caniche");
+		rc14.setNomeRacaCachorro("Cão de Crista Chinês");
+		rc15.setNomeRacaCachorro("Cão d’Água Espanhol");
+		rc16.setNomeRacaCachorro("Cão Lobo Checoslovaco");
+		rc17.setNomeRacaCachorro("Cavalier King Charles Spaniel");
+		rc18.setNomeRacaCachorro("Chihuahua");
+		rc19.setNomeRacaCachorro("Chow-Chow");
+		rc20.setNomeRacaCachorro("Cocker Americano");
+		rc21.setNomeRacaCachorro("Cocker Spaniel Inglês");
+		rc22.setNomeRacaCachorro("Collie");
+		rc23.setNomeRacaCachorro("Dálmata");
+		rc24.setNomeRacaCachorro("Doberman");
+		rc25.setNomeRacaCachorro("Dogue Alemão");
+		rc26.setNomeRacaCachorro("Dogue de Bordéus");
+		rc27.setNomeRacaCachorro("Epagneul Bretão");
+		rc28.setNomeRacaCachorro("Fila Brasileiro");
+		rc29.setNomeRacaCachorro("Fox Terrier");
+		rc30.setNomeRacaCachorro("Galgo Afegão");
+		rc31.setNomeRacaCachorro("Golden Retriever");
+		rc32.setNomeRacaCachorro("Husky Siberiano");
+		rc33.setNomeRacaCachorro("Ibizan Hound");
+		rc34.setNomeRacaCachorro("Jack Russel Terrier");
+		rc35.setNomeRacaCachorro("Lhasa Apso");
+		rc36.setNomeRacaCachorro("Mastiff");
+		rc37.setNomeRacaCachorro("Mastim dos Pirenéus");
+		rc38.setNomeRacaCachorro("Mastim Espanhol");
+		rc39.setNomeRacaCachorro("Mastim Napolitano");
+		rc40.setNomeRacaCachorro("Norfolk Terrier");
+		rc41.setNomeRacaCachorro("Papillon");
+		rc42.setNomeRacaCachorro("Pastor Alemão");
+		rc43.setNomeRacaCachorro("Pastor de Beauce");
+		rc44.setNomeRacaCachorro("Pequeno Basset Griffon");
+		rc45.setNomeRacaCachorro("Pequeno Brabançon");
+		rc46.setNomeRacaCachorro("Pequeno Cão Leão");
+		rc47.setNomeRacaCachorro("Pequinês");
+		rc48.setNomeRacaCachorro("Perdigueiro Português");
+		rc49.setNomeRacaCachorro("Pinscher Anão");
+		rc50.setNomeRacaCachorro("Pitbull");
+		rc51.setNomeRacaCachorro("Rottweiler");
+		rc52.setNomeRacaCachorro("Samoiedo");
+		rc53.setNomeRacaCachorro("São Bernardo");
+		rc54.setNomeRacaCachorro("Schnauzer");
+		rc55.setNomeRacaCachorro("Setter Inglês");
+		rc56.setNomeRacaCachorro("Setter Irlandês");
+		rc57.setNomeRacaCachorro("Shar Pei");
+		rc58.setNomeRacaCachorro("Shih Tzu");
+		rc59.setNomeRacaCachorro("Spaniel Japonês");
+		rc60.setNomeRacaCachorro("Spitz Alemão");
+		rc61.setNomeRacaCachorro("Staffordshire Bull Terrier");
+		rc62.setNomeRacaCachorro("Teckel");
+		rc63.setNomeRacaCachorro("Terranova");
+		rc64.setNomeRacaCachorro("Terrier Brasileiro");
+		rc65.setNomeRacaCachorro("Vizsla");
+		rc66.setNomeRacaCachorro("Waimaraner");
+		rc67.setNomeRacaCachorro("West Highland White Terrier");
+		rc68.setNomeRacaCachorro("Yorkshire Terrier");
+
+//		for (int i = 0; i < 68; i++) {
+//			System.out.println("Fachada.salvarRacaCachorro(rc"+i+");");
+//		}
+		
+		Fachada.salvarRacaCachorro(rc0);
+		Fachada.salvarRacaCachorro(rc1);
+		Fachada.salvarRacaCachorro(rc2);
+		Fachada.salvarRacaCachorro(rc3);
+		Fachada.salvarRacaCachorro(rc4);
+		Fachada.salvarRacaCachorro(rc5);
+		Fachada.salvarRacaCachorro(rc6);
+		Fachada.salvarRacaCachorro(rc7);
+		Fachada.salvarRacaCachorro(rc8);
+		Fachada.salvarRacaCachorro(rc9);
+		Fachada.salvarRacaCachorro(rc10);
+		Fachada.salvarRacaCachorro(rc11);
+		Fachada.salvarRacaCachorro(rc12);
+		Fachada.salvarRacaCachorro(rc13);
+		Fachada.salvarRacaCachorro(rc14);
+		Fachada.salvarRacaCachorro(rc15);
+		Fachada.salvarRacaCachorro(rc16);
+		Fachada.salvarRacaCachorro(rc17);
+		Fachada.salvarRacaCachorro(rc18);
+		Fachada.salvarRacaCachorro(rc19);
+		Fachada.salvarRacaCachorro(rc20);
+		Fachada.salvarRacaCachorro(rc21);
+		Fachada.salvarRacaCachorro(rc22);
+		Fachada.salvarRacaCachorro(rc23);
+		Fachada.salvarRacaCachorro(rc24);
+		Fachada.salvarRacaCachorro(rc25);
+		Fachada.salvarRacaCachorro(rc26);
+		Fachada.salvarRacaCachorro(rc27);
+		Fachada.salvarRacaCachorro(rc28);
+		Fachada.salvarRacaCachorro(rc29);
+		Fachada.salvarRacaCachorro(rc30);
+		Fachada.salvarRacaCachorro(rc31);
+		Fachada.salvarRacaCachorro(rc32);
+		Fachada.salvarRacaCachorro(rc33);
+		Fachada.salvarRacaCachorro(rc34);
+		Fachada.salvarRacaCachorro(rc35);
+		Fachada.salvarRacaCachorro(rc36);
+		Fachada.salvarRacaCachorro(rc37);
+		Fachada.salvarRacaCachorro(rc38);
+		Fachada.salvarRacaCachorro(rc39);
+		Fachada.salvarRacaCachorro(rc40);
+		Fachada.salvarRacaCachorro(rc41);
+		Fachada.salvarRacaCachorro(rc42);
+		Fachada.salvarRacaCachorro(rc43);
+		Fachada.salvarRacaCachorro(rc44);
+		Fachada.salvarRacaCachorro(rc45);
+		Fachada.salvarRacaCachorro(rc46);
+		Fachada.salvarRacaCachorro(rc47);
+		Fachada.salvarRacaCachorro(rc48);
+		Fachada.salvarRacaCachorro(rc49);
+		Fachada.salvarRacaCachorro(rc50);
+		Fachada.salvarRacaCachorro(rc51);
+		Fachada.salvarRacaCachorro(rc52);
+		Fachada.salvarRacaCachorro(rc53);
+		Fachada.salvarRacaCachorro(rc54);
+		Fachada.salvarRacaCachorro(rc55);
+		Fachada.salvarRacaCachorro(rc56);
+		Fachada.salvarRacaCachorro(rc57);
+		Fachada.salvarRacaCachorro(rc58);
+		Fachada.salvarRacaCachorro(rc59);
+		Fachada.salvarRacaCachorro(rc60);
+		Fachada.salvarRacaCachorro(rc61);
+		Fachada.salvarRacaCachorro(rc62);
+		Fachada.salvarRacaCachorro(rc63);
+		Fachada.salvarRacaCachorro(rc64);
+		Fachada.salvarRacaCachorro(rc65);
+		Fachada.salvarRacaCachorro(rc66);
+		Fachada.salvarRacaCachorro(rc67);
+		
+		//Salvando Racas de Gatos ----------------------------------------------------------- 
+		RacaGato rg0= new RacaGato();
+		RacaGato rg1= new RacaGato();
+		RacaGato rg2= new RacaGato();
+		RacaGato rg3= new RacaGato();
+		RacaGato rg4= new RacaGato();
+		RacaGato rg5= new RacaGato();
+		RacaGato rg6= new RacaGato();
+		RacaGato rg7= new RacaGato();
+		RacaGato rg8= new RacaGato();
+		RacaGato rg9= new RacaGato();
+		RacaGato rg10= new RacaGato();
+		RacaGato rg11= new RacaGato();
+		RacaGato rg12= new RacaGato();
+		RacaGato rg13= new RacaGato();
+		RacaGato rg14= new RacaGato();
+		RacaGato rg15= new RacaGato();
+		RacaGato rg16= new RacaGato();
+		RacaGato rg17= new RacaGato();
+		RacaGato rg18= new RacaGato();
+		RacaGato rg19= new RacaGato();
+		RacaGato rg20= new RacaGato();
+		RacaGato rg21= new RacaGato();
+		RacaGato rg22= new RacaGato();
+		RacaGato rg23= new RacaGato();
+		RacaGato rg24= new RacaGato();
+		RacaGato rg25= new RacaGato();
+		RacaGato rg26= new RacaGato();
+		RacaGato rg27= new RacaGato();
+		RacaGato rg28= new RacaGato();
+		RacaGato rg29= new RacaGato();
+		RacaGato rg30= new RacaGato();
+		RacaGato rg31= new RacaGato();
+		RacaGato rg32= new RacaGato();
+		RacaGato rg33= new RacaGato();
+		RacaGato rg34= new RacaGato();
+		RacaGato rg35= new RacaGato();
+		RacaGato rg36= new RacaGato();
+		RacaGato rg37= new RacaGato();
+		
+		
+		rg0.setNomeRacaGato( "Abissínio");
+		rg1.setNomeRacaGato( "Bobtail americano");
+		rg2.setNomeRacaGato( "Curl americano");
+		rg3.setNomeRacaGato( "Gato de pêlo curto americano");
+		rg4.setNomeRacaGato( "Balinês");
+		rg5.setNomeRacaGato( "Sagrado da Birmânia");
+		rg6.setNomeRacaGato( "Bombaim");
+		rg7.setNomeRacaGato( "Gato de pêlo curto inglês");
+		rg8.setNomeRacaGato( "Burmês");
+		rg9.setNomeRacaGato( "Chartreux");
+		rg10.setNomeRacaGato( "Colorpoint de pêlo curto");
+		rg11.setNomeRacaGato( "Cornish Rex");
+		rg12.setNomeRacaGato( "Devon Rex");
+		rg13.setNomeRacaGato( "Mau egípcio");
+		rg14.setNomeRacaGato( "Exótico");
+		rg15.setNomeRacaGato( "Havana marrom");
+		rg16.setNomeRacaGato( "Bobtail japonês");
+		rg17.setNomeRacaGato( "Javanês");
+		rg18.setNomeRacaGato( "Korat");
+		rg19.setNomeRacaGato( "Maine Coon");
+		rg20.setNomeRacaGato( "Manx");
+		rg21.setNomeRacaGato( "Norueguês da Floresta");
+		rg22.setNomeRacaGato( "Ocicat");
+		rg23.setNomeRacaGato( "Oriental");
+		rg24.setNomeRacaGato( "Persa");
+		rg25.setNomeRacaGato( "Pixie-bob");
+		rg26.setNomeRacaGato( "Ragdoll");
+		rg27.setNomeRacaGato( "Russo azul");
+		rg28.setNomeRacaGato( "Scottish Fold");
+		rg29.setNomeRacaGato( "Selkirk Rex");
+		rg30.setNomeRacaGato( "Siamês");
+		rg31.setNomeRacaGato( "Siberiano");
+		rg32.setNomeRacaGato( "Cingapura");
+		rg33.setNomeRacaGato( "Somali");
+		rg34.setNomeRacaGato( "Sphynx");
+		rg35.setNomeRacaGato( "Tonquinês");
+		rg36.setNomeRacaGato( "Angorá turco");
+		rg37.setNomeRacaGato( "Gato van turco");
+
+		Fachada.salvarRacaGato(rg0);
+		Fachada.salvarRacaGato(rg1);
+		Fachada.salvarRacaGato(rg2);
+		Fachada.salvarRacaGato(rg3);
+		Fachada.salvarRacaGato(rg4);
+		Fachada.salvarRacaGato(rg5);
+		Fachada.salvarRacaGato(rg6);
+		Fachada.salvarRacaGato(rg7);
+		Fachada.salvarRacaGato(rg8);
+		Fachada.salvarRacaGato(rg9);
+		Fachada.salvarRacaGato(rg10);
+		Fachada.salvarRacaGato(rg11);
+		Fachada.salvarRacaGato(rg12);
+		Fachada.salvarRacaGato(rg13);
+		Fachada.salvarRacaGato(rg14);
+		Fachada.salvarRacaGato(rg15);
+		Fachada.salvarRacaGato(rg16);
+		Fachada.salvarRacaGato(rg17);
+		Fachada.salvarRacaGato(rg18);
+		Fachada.salvarRacaGato(rg19);
+		Fachada.salvarRacaGato(rg20);
+		Fachada.salvarRacaGato(rg21);
+		Fachada.salvarRacaGato(rg22);
+		Fachada.salvarRacaGato(rg23);
+		Fachada.salvarRacaGato(rg24);
+		Fachada.salvarRacaGato(rg25);
+		Fachada.salvarRacaGato(rg26);
+		Fachada.salvarRacaGato(rg27);
+		Fachada.salvarRacaGato(rg28);
+		Fachada.salvarRacaGato(rg29);
+		Fachada.salvarRacaGato(rg30);
+		Fachada.salvarRacaGato(rg31);
+		Fachada.salvarRacaGato(rg32);
+		Fachada.salvarRacaGato(rg33);
+		Fachada.salvarRacaGato(rg34);
+		Fachada.salvarRacaGato(rg35);
+		Fachada.salvarRacaGato(rg36);
+		Fachada.salvarRacaGato(rg37);
+		
+		Banner b1 = new Banner();
+		Banner b2 = new Banner();
+		Banner b3 = new Banner();
+		
+		b1.setNomeBanner(null);
+		b2.setNomeBanner(null);
+		b3.setNomeBanner(null);
+		
+		HistoricoBanner hb1 = new HistoricoBanner();
+		HistoricoBanner hb2 = new HistoricoBanner();
+		HistoricoBanner hb3 = new HistoricoBanner();
+		
+		hb1.setNomeFoto(null);
+		hb2.setNomeFoto(null);
+		hb3.setNomeFoto(null);
+		
+		hb1.setBannerId(1);
+		hb2.setBannerId(2);
+		hb3.setBannerId(3);
+		
+		Fachada.salvarHistoricoBanners(hb1);
+		Fachada.salvarHistoricoBanners(hb2);
+		Fachada.salvarHistoricoBanners(hb3);
+
+		Fachada.salvarBanner(b1);
+		Fachada.salvarBanner(b2);
+		Fachada.salvarBanner(b3);
+		
+		*/
+	}
+
+
+}

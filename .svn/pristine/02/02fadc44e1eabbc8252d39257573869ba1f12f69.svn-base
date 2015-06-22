@@ -1,0 +1,13 @@
+# mail.from debería ser igual que mail.from.user y mail.smtp.user
+# mail.from==mail.from.user==mail.smtp.user
+
+mail.from=petgohome@gmail.com
+mail.from.user=petgohome@gmail.com
+mail.from.pass=quarzo102
+
+
+mail.smtp.host=smtp.gmail.com
+mail.smtp.starttls.enable=true
+mail.smtp.port=587
+mail.smtp.user=petgohome@gmail.com
+mail.smtp.auth=true

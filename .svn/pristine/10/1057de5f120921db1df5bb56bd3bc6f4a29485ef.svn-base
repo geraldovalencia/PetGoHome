@@ -1,0 +1,124 @@
+package br.com.petGoHome.entidades;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+@Entity
+//@SequenceGenerator(name="cachorro_id", sequenceName="cachorro_seq", allocationSize=1) para postgre
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Tag extends AbstractEntity{
+
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	//@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="cachorro_id")
+	private long id;
+	
+	//Caso aumentasse o LENGTH, mudar na BD manualmente
+	@Column(unique = true, length=7, nullable=false)
+	private String valorTag;
+	
+	//Precisa ser classe primitiva, Com letra maiuscula, pois classe minuscula nao 
+	//aceita valores nulos, somente os primitivos aceitam
+	@Column(unique = true, nullable=true)
+	private Long idPet;
+	
+	@OneToOne
+	private Pet pet;
+	//Assim o Hibernate salva o id do pet na tabela TAG 
+	
+	@ManyToOne
+	private PetShop petshop;
+	
+	@Temporal(TemporalType.DATE)
+	private Date dataCriacao;
+	@Temporal(TemporalType.DATE)
+	private Date dataAtivacao;
+	
+	@Enumerated(EnumType.STRING)	
+	private Uf uf;
+	
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getValorTag() {
+		return valorTag;
+	}
+
+	public void setValorTag(String valorTag) {
+		this.valorTag = valorTag;
+	}
+
+	public Pet getPet() {
+		return pet;
+	}
+
+	public void setPet(Pet pet) {
+		this.pet = pet;
+	}
+
+	public PetShop getPetshop() {
+		return petshop;
+	}
+
+	public void setPetshop(PetShop petshop) {
+		this.petshop = petshop;
+	}
+
+	public Date getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(Date dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public Date getDataAtivacao() {
+		return dataAtivacao;
+	}
+
+	public void setDataAtivacao(Date dataAtivacao) {
+		this.dataAtivacao = dataAtivacao;
+	}
+
+	public Uf getUf() {
+		return uf;
+	}
+
+	public void setUf(Uf uf) {
+		this.uf = uf;
+	}
+
+	public Long getIdPet() {
+		return idPet;
+	}
+
+	public void setIdPet(Long idPet) {
+		this.idPet = idPet;
+	}
+
+	
+	
+	
+
+}

@@ -1,0 +1,192 @@
+package br.com.petGoHome.entidades;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+@Entity
+//@SequenceGenerator(name="cachorro_id", sequenceName="cachorro_seq", allocationSize=1) para postgre
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Pet extends AbstractEntity{
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	//@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="cachorro_id")
+	private long id;
+	
+	private String nome;
+	
+	private long idTag;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="SEXO")
+	private Sexo sexo;
+	
+	@Enumerated(EnumType.STRING)
+	private TipoAnimal tipoAnimal;
+	
+//	@Lob
+//	@Column(name="BOOK_IMAGE", nullable=false, columnDefinition="mediumblob")
+//	private byte[] image;
+	
+	private String nomeImagem;
+	
+	private String descricao;
+	private String cor;
+	
+	@Column(unique = true, nullable=true)
+	private String tagNumero;
+
+	@ManyToOne
+	private Pessoa pessoa;
+	
+	private long idPessoa;
+	//Assim o Hibernate salva o id da Pessoa na tabela Pet
+	
+	@Column(name="DataNascimento")
+	@Temporal(TemporalType.DATE)
+	private Date dataNascimentoPet;
+	
+	@OneToOne(mappedBy="pet")
+	private Tag tag;
+	//Assim o Hibernate salva o id da TAG na tabela Pet
+	
+	private boolean possuiTag;
+	
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Sexo getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(Sexo sexo) {
+		this.sexo = sexo;
+	}
+
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
+
+	public Date getDataNascimentoPet() {
+		return dataNascimentoPet;
+	}
+
+	public void setDataNascimentoPet(Date dataNascimentoPet) {
+		this.dataNascimentoPet = dataNascimentoPet;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public TipoAnimal getTipoAnimal() {
+		return tipoAnimal;
+	}
+
+	public void setTipoAnimal(TipoAnimal tipoAnimal) {
+		this.tipoAnimal = tipoAnimal;
+	}
+
+	public Tag getTag() {
+		return tag;
+	}
+
+	public void setTag(Tag tag) {
+		this.tag = tag;
+	}
+
+	
+
+	public String getNomeImagem() {
+		return nomeImagem;
+	}
+
+	public void setNomeImagem(String nomeImagem) {
+		this.nomeImagem = nomeImagem;
+	}
+
+	public String getTagNumero() {
+		return tagNumero;
+	}
+
+	public void setTagNumero(String tagNumero) {
+		this.tagNumero = tagNumero;
+	}
+
+	public boolean isPossuiTag() {
+		return possuiTag;
+	}
+
+	public void setPossuiTag(boolean possuiTag) {
+		this.possuiTag = possuiTag;
+	}
+
+	public long getIdPessoa() {
+		return idPessoa;
+	}
+
+	public void setIdPessoa(long idPessoa) {
+		this.idPessoa = idPessoa;
+	}
+
+	public long getIdTag() {
+		return idTag;
+	}
+
+	public void setIdTag(long idTag) {
+		this.idTag = idTag;
+	}
+
+
+	
+
+	
+}
